@@ -1,102 +1,46 @@
-
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reproductor ABYA YALA</title>
-    <script src="https://cdn.jsdelivr.net/npm/clappr@latest/dist/clappr.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/@clappr/player@0.8/dist/clappr.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/@swarmcloud/hls/p2p-engine.min.js"></script>
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #222222; /* Fondo oscuro */
-            color: white;
-            font-family: 'Roboto Condensed', sans-serif;
-        }
-
-        #player-container {
-            width: 100%;
-            max-width: 1080px;
-            height: 720px;
-            position: relative;
-            border-radius: 0px;
-            overflow: hidden;
-            background-color: black;
-        }
-
-        #player {
-            width: 100%;
-            height: 100%;
-        }
-
-        .player-controls {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            display: flex;
-            align-items: center;
-            color: white;
-            font-size: 14px;
-            z-index: 1;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .player-controls button {
-            background-color: rgba(0, 0, 0, 0.7);
-            color: white;
-            border: none;
-            border-radius: 5px;
-            padding: 5px 10px;
-            margin-right: 10px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .player-controls button:hover {
-            background-color: rgba(0, 0, 0, 0.9);
-        }
-
-        #player-container:hover .player-controls {
-            opacity: 1;
-        }
+    body, html {margin: 0;padding: 0;width: 100%;height: 100%;overflow: hidden;}
+    #player {position: absolute;top: 0;left: 0;width: 100%;height: 100%;}
+    /* CSS de la12hd.com/cssm.css incluido directamente */
+    .media-control[data-media-control] .media-control-layer[data-controls] .bar-container[data-seekbar] .bar-background[data-seekbar] {
+        height: 5px !important;
+    }
+    .media-control[data-media-control] .media-control-layer[data-controls] .bar-container[data-seekbar]:hover .bar-background[data-seekbar] {
+        height: 7px !important;
+    }
     </style>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9645690472882375"
-     crossorigin="anonymous"></script>
-
 </head>
 <body>
-    <div id="player-container">
-        <div id="player"></div>
-        <div class="player-controls">
-            <button onclick="compartir()">Compartir</button>
-        </div>
-    </div>
-
-    <script>
+<div id="player">
+    
+</div>
+<script>
+    var playbackURL = "https://zekonew.newkso.ru/zeko/premium372/mono.m3u8";
+    var p2pConfig = {
+        live: true,
+        trackerZone: "us",    
+    }
+    P2PEngineHls.tryRegisterServiceWorker(p2pConfig).then(() => {
         var player = new Clappr.Player({
-            source: "https://mzr1.dbcast.live/QfCVHoWOD7u1sSlxcTUPVA/1752918626/323830303a6364303a316330343a343430303a393034343a353034343a653661393a35383863/ff448/playlist.m3u8?b=1",
+            source: playbackURL,
             parentId: "#player",
+            poster: "",
             width: "100%",
             height: "100%",
-            muted: true,
-            autoPlay: true
+            autoPlay: true,
+            plugins: [],
+            mediacontrol: {seekbar: "#ff0000", buttons: "#ff0000"},
         });
-
-        function compartir() {
-            if (navigator.share) {
-                navigator.share({ title: 'DEPORTES ON PLUS - En vivo', text: 'Estoy viendo DEPORTES ON PLUS en vivo.', url: window.location.href })
-                    .then(() => { console.log('Compartido exitosamente.'); })
-                    .catch((error) => { console.error('Error al compartir:', error); });
-            } else {
-                alert('La funci�n de compartir no est� disponible en este navegador.');
-            }
-        }
-    </script>
+        p2pConfig.hlsjsInstance = player.core.getCurrentPlayback()?._hls;
+        var engine = new P2PEngineHls(p2pConfig);
+    });
+</script>
 </body>
 </html>
+
+
