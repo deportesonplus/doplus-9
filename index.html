@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,11 +17,9 @@
     </style>
 </head>
 <body>
-<div id="player">
-    
-</div>
+<div id="player"></div>
 <script>
-    var playbackURL = "https://zekonew.newkso.ru/zeko/premium372/mono.m3u8";
+    var playbackURL = "https://bmv3.fubohd.com:443/disney3/mono.m3u8?token=cf10db187de00fa38c2e9642f8b36c0a5d6a0581-ea-1753833961-1753815961";
     var p2pConfig = {
         live: true,
         trackerZone: "us",    
@@ -29,12 +28,13 @@
         var player = new Clappr.Player({
             source: playbackURL,
             parentId: "#player",
-            poster: "",
+            poster: "https://i.ibb.co/39mW1sjt/ON-PLUS2.png",
             width: "100%",
             height: "100%",
+            volumen: 50,
             autoPlay: true,
             plugins: [],
-            mediacontrol: {seekbar: "#ff0000", buttons: "#ff0000"},
+            mediacontrol: {seekbar: "#D4ED31", buttons: "#FFFFFF"},
         });
         p2pConfig.hlsjsInstance = player.core.getCurrentPlayback()?._hls;
         var engine = new P2PEngineHls(p2pConfig);
